@@ -1,0 +1,22 @@
+# Dependencies
+/vendor/
+composer.phar
+
+# Runtime data / generated
+/cache/
+/.phpdoc/
+/etc/db.db
+/build/reports/
+/build/openapi.json
+
+# Old source repos kept alongside during the merge - not part of this repo
+/Ascension/
+/Ascension-Core/
+
+# Planning/brief material - not part of the shipped project
+/brief.md
+
+# IDE / OS
+.idea/
+.DS_Store
+.phpunit.result.cache
