@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: curl, simplexml, sqlite3, pdo_sqlite
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --no-check-publish
+
+      - name: Cache composer packages
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Initialise database
+        run: php db/setup.php
+        env:
+          ASCENSION_ADMIN_PASSWORD: ${{ secrets.ASCENSION_CI_ADMIN_PASSWORD || 'ci-only-password' }}
+
+      - name: PHP_CodeSniffer (checkstyle report)
+        run: vendor/bin/phpcs --standard=tools/phpcs.xml --report=checkstyle --report-file=build/reports/checkstyle.xml lib src
+        continue-on-error: true
+
+      - name: PHP_CodeSniffer (human-readable)
+        run: vendor/bin/phpcs --standard=tools/phpcs.xml lib src
+        continue-on-error: true
+
+      - name: PHPUnit
+        run: vendor/bin/phpunit --log-junit build/reports/junit.xml
+
+      - name: Upload QA reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-reports
+          path: build/reports/

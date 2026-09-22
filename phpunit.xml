@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="tests/Bootstrap.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
+  <testsuites>
+    <testsuite name="AscensionPlatform">
+      <directory suffix="Test.php">tests</directory>
+    </testsuite>
+  </testsuites>
+  <coverage/>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+      <directory suffix=".php">lib</directory>
+    </include>
+  </source>
+</phpunit>
