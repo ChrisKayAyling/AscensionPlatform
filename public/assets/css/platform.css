@@ -1,0 +1,28 @@
+/* AscensionPlatform - minimal custom styling layered on top of Bootstrap 5. */
+
+body {
+    background-color: #f5f6f8;
+}
+
+.card-metric .card-body {
+    padding: 1.25rem;
+}
+
+.card-metric .metric-value {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+pre.report-output {
+    max-height: 480px;
+    overflow-y: auto;
+    background-color: #212529;
+    color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.375rem;
+}
+
+.api-key-value {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    word-break: break-all;
+}

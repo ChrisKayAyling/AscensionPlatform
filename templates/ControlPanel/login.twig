@@ -1,0 +1,25 @@
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Admin Login</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/ControlPanel/loginSubmit" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ data.CsrfToken }}"/>
+                        <div class="mb-3">
+                            <label class="form-label" for="Username">Username</label>
+                            <input type="text" id="Username" name="Username" class="form-control" autocomplete="username" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Password">Password</label>
+                            <input type="password" id="Password" name="Password" class="form-control" autocomplete="current-password" required/>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Log in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

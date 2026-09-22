@@ -1,0 +1,22 @@
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>Welcome to AscensionPlatform</h1>
+            <p class="lead">A user-friendly CMS with a built-in administration system, API key management,
+                and an integrated QA toolchain.</p>
+            <p>
+                Manage routes, settings, API keys and QA reports from the
+                <a href="/ControlPanel">admin area</a>.
+            </p>
+
+            {% if data.DatabaseResult is defined %}
+                <div class="card mt-4">
+                    <div class="card-header">Example data storage query</div>
+                    <div class="card-body">
+                        <pre class="report-output">{{ data.DatabaseResult|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

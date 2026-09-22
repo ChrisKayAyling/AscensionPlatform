@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">AscensionPlatform</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#platformNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="platformNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ControlPanel">Admin</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if data.Session.User %}
+                    <li class="nav-item">
+                        <span class="navbar-text text-light me-3">Signed in as {{ data.Session.User }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ControlPanel/logout">Log out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ControlPanel">Log in</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
