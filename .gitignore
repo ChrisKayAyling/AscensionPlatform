@@ -1,6 +1,7 @@
 # Dependencies
 /vendor/
 composer.phar
+/tools/box.phar
 
 # Runtime data / generated
 /cache/
@@ -8,6 +9,7 @@ composer.phar
 /etc/db.db
 /build/reports/
 /build/openapi.json
+/build/dist/
 
 # Old source repos kept alongside during the merge - not part of this repo
 /Ascension/

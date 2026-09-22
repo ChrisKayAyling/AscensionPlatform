@@ -23,6 +23,10 @@
 #                 report still gets produced; exits non-zero if any step failed.
 #   version       Print the current platform version (latest git tag, or
 #                 "0.0.0-dev" if untagged).
+#   phar          Compile bin/build.php into build/dist/build.phar - a single
+#                 portable file (bootstraps tools/box.phar if needed) that
+#                 runs the same commands as this script anywhere PHP is
+#                 available: `php build.phar test --root=/path/to/project`.
 #
 # Multiple commands may be given in one invocation, e.g.:
 #   ./build.sh install test lint
@@ -157,8 +161,37 @@ cmd_all() {
     cmd_reports
 }
 
+ensure_box() {
+    if [ -f "$ROOT_DIR/tools/box.phar" ]; then
+        return
+    fi
+
+    log "box.phar not found - downloading humbug/box"
+    curl -fsSL -o "$ROOT_DIR/tools/box.phar" https://github.com/box-project/box/releases/latest/download/box.phar
+    chmod +x "$ROOT_DIR/tools/box.phar"
+}
+
+cmd_phar() {
+    log "Compiling bin/build.php into build/dist/build.phar"
+    ensure_box
+
+    local composer_bin="composer"
+    if ! command -v composer >/dev/null 2>&1; then
+        ensure_composer
+        composer_bin="$ROOT_DIR/composer.phar"
+    fi
+
+    mkdir -p "$ROOT_DIR/build/dist"
+    php "$ROOT_DIR/tools/box.phar" compile -c "$ROOT_DIR/box.json" --composer-bin="$composer_bin" || fail "phar compile"
+
+    if [ -f "$ROOT_DIR/build/dist/build.phar" ]; then
+        log "Built build/dist/build.phar"
+        php "$ROOT_DIR/build/dist/build.phar" version
+    fi
+}
+
 if [ "$#" -eq 0 ]; then
-    sed -n '2,29p' "$0"
+    sed -n '2,33p' "$0"
     exit 0
 fi
 
@@ -174,6 +207,7 @@ for arg in "$@"; do
         reports) cmd_reports ;;
         all) cmd_all ;;
         version) cmd_version ;;
+        phar) cmd_phar ;;
         *)
             echo "Unknown command: $arg" >&2
             exit 1

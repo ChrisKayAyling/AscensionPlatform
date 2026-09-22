@@ -93,6 +93,21 @@ Keys screens.
 
 Reports are also surfaced inside the admin Control Panel.
 
+### Running the toolchain elsewhere (build.phar)
+
+`bin/build.php` is a dependency-free PHP reimplementation of `build.sh`,
+compiled into a single portable file with `./build.sh phar`
+(`build/dist/build.phar`, bootstraps `tools/box.phar` on first use). Copy
+that one file anywhere PHP is available - another machine, a container, a CI
+runner with no composer/bash setup of its own - and point it at a checkout:
+
+```
+php build.phar install test lint --root=/path/to/AscensionPlatform
+```
+
+`--root` defaults to the current directory, so running it from inside a
+checkout needs no flag at all.
+
 ## Versioning
 
 Releases are tagged in git (`vMAJOR.MINOR.PATCH`, semver). See `CHANGELOG.md`.

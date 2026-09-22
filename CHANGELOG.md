@@ -18,6 +18,10 @@ administration system, API key support, and an integrated QA toolchain.
   reports surfaced in the admin area.
 - `build.sh`: a single entry point to install dependencies, initialise the
   database, and run every QA tool.
+- `bin/build.php` / `build.phar` (`./build.sh phar`): the same toolchain
+  runner as a dependency-free, portable PHP CLI - copy the compiled
+  `build.phar` to any machine with a PHP binary and run it against any
+  checkout via `--root`.
 - `db/schema.sql` / `db/setup.php`: reproducible database schema and seeding,
   replacing hand-maintained example data.
 
