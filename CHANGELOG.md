@@ -22,6 +22,9 @@ administration system, API key support, and an integrated QA toolchain.
   runner as a dependency-free, portable PHP CLI - copy the compiled
   `build.phar` to any machine with a PHP binary and run it against any
   checkout via `--root`.
+- GitHub Actions CI (`.github/workflows/ci.yml`): runs install, lint and
+  test on every push and pull request to `main`, and uploads the QA reports
+  as a build artifact.
 - `db/schema.sql` / `db/setup.php`: reproducible database schema and seeding,
   replacing hand-maintained example data.
 
